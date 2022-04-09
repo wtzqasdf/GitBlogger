@@ -1,0 +1,17 @@
+.xcode-grp {
+    display: flex;
+    width: 100%;
+}
+
+.xcode-grp .xcode-input {
+    display: flex;
+    flex: content;
+    background-color: inherit;
+    border: 2px solid black;
+    padding: 0.5rem;
+    outline-style: none;
+    min-height: 200px;
+}
+.xcode-grp .xcode-input:focus {
+    border-color: red;
+}
