@@ -15,7 +15,8 @@ export default class XCodeTextarea extends Component<{ value: string, onInput: (
         var text = 'XCode功能範例\n';
         text += '[text color="red" bg="black" size="16" italic bold]Input your text[/text]\n';
         text += '[video url=""][/video]\n';
-        text += '[img url="" large middle small][/img]';
+        text += '[img url="" large middle small][/img]\n';
+        text += '[link url="" color="red" bg="black" size="16" italic bold]Hello World[/link]';
         return text;
     }
 }

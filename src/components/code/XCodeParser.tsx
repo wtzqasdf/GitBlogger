@@ -6,7 +6,7 @@ export default class XCodeParser {
     private _matchTag: string;
 
     constructor(text: string) {
-        this._matchTag = 'video|img|text';
+        this._matchTag = 'video|img|text|link';
         if (text === '' || text === undefined) {
             this._originText = '';
             this._tags = [];
@@ -67,6 +67,24 @@ export default class XCodeParser {
         }
         return (<a href={url} target='_blank'><img src={url} style={{ width: width, height: height }}></img></a>)
     }
+    private toLink(parser: TagParser): ReactNode {
+        const url = parser.getProperty('url');
+        var color = parser.getProperty('color');
+        var fontSize = parser.getProperty('size');
+        const bg = parser.getProperty('bg');
+        const italic = parser.hasProperty('italic');
+        const bold = parser.hasProperty('bold');
+        color = color === undefined ? 'darkred' : color;
+        fontSize = fontSize === undefined ? undefined : fontSize + 'px';
+
+        return (<a href={url} target="_blank" style={{
+            color: color,
+            backgroundColor: bg,
+            fontSize: fontSize,
+            fontStyle: italic ? 'italic' : undefined,
+            fontWeight: bold ? 'bold' : undefined
+        }}>{parser.content}</a>);
+    }
 
     /**
      * 將指定的內容轉換成ReactNode
@@ -93,6 +111,8 @@ export default class XCodeParser {
                     const parser = new TagParser(tag);
                     if (parser.isTagCorrect('text')) {
                         tagElement = this.toText(parser);
+                    } else if (parser.isTagCorrect('link')) {
+                        tagElement = this.toLink(parser);
                     } else if (parser.isTagCorrect('video')) {
                         tagElement = this.toVideo(parser);
                     } else if (parser.isTagCorrect('img')) {
